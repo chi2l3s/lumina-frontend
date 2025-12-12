@@ -33,7 +33,7 @@ export const VideoProcess = ({ jobId }: VideoProcessProps) => {
     const event = data?.videoJobProgress as SubscriptionEvent | undefined;
     if (!event) return;
 
-    const status = (event.status as Status) || "processing";
+    const status = "processing" as Status;
     const qualityKey = event.quality || "global";
 
     setQualities((prev) => {
