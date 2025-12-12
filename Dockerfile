@@ -14,6 +14,8 @@ RUN bun install
 
 COPY . .
 
+RUN bun gql-gen
+
 RUN bun run build
 
 EXPOSE 3000
