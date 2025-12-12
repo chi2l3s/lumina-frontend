@@ -51,7 +51,7 @@ export const WatchClient = ({
         setLoading(true);
 
         const res = await fetch(
-          `http://localhost:4000/api/video/watch/${contentType}/${contentId}/token`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/video/watch/${contentType}/${contentId}/token`,
           {
             method: "POST",
             credentials: "include",
@@ -99,7 +99,7 @@ export const WatchClient = ({
 
     try {
       await fetch(
-        `http://localhost:4000/api/video/progress?token=${encodeURIComponent(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/video/progress?token=${encodeURIComponent(
           token
         )}`,
         {
