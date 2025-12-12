@@ -184,7 +184,7 @@ export const WatchClient = ({
 
   return (
     <VideoPlayer
-      src={`http://localhost:4000${src}`}
+      src={`${process.env.NEXT_PUBLIC_API_URL}${src}`}
       title={title}
       subtitle={subtitle}
       initialTime={initialTime}
