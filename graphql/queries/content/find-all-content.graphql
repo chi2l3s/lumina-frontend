@@ -1,0 +1,10 @@
+query FindAllContent {
+  findAllContent {
+    id
+    title
+    description
+    releaseYear
+    posterUrl
+    trailerUrl
+  }
+}

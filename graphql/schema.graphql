@@ -1,0 +1,349 @@
+type ActorModel {
+  bio: String!
+  content: ContentModel!
+  contentId: String!
+  createdAt: DateTime!
+  id: String!
+  name: String!
+  photoUrl: String!
+}
+
+type AuthModel {
+  message: String
+  user: UserModel
+}
+
+input ChangePasswordInput {
+  newPassword: String!
+  oldPassword: String!
+}
+
+type ContentModel {
+  actors: [ActorModel!]!
+  backdropUrl: String
+  createdAt: DateTime!
+  description: String
+  genres: [GenreModel!]!
+  id: String!
+  movie: MovieModel
+  posterUrl: String
+  rating: Float
+  releaseYear: Float
+  series: SeriesModel
+  title: String!
+  trailerUrl: String
+  type: ContentType!
+  updatedAt: DateTime!
+}
+
+enum ContentType {
+  MOVIE
+  SERIES
+}
+
+input CreateContentInput {
+  actorIds: [String!]
+  description: String
+  genresIds: [String!]
+  posterUrl: String
+  releaseYear: Float
+  title: String!
+  trailerUrl: String
+  type: ContentType!
+}
+
+input CreateEpisodeInput {
+  description: String
+  episodeNumber: Float!
+  seasonId: String!
+  thumbnailUrl: String
+  title: String!
+}
+
+input CreateSeriesSeasonInput {
+  description: String
+  posterUrl: String
+  releaseYear: Float
+  seasonNumber: Float!
+  seriesId: String!
+  title: String
+}
+
+input CreateUserInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type DeviceModel {
+  browser: String!
+  os: String!
+  type: String!
+}
+
+input EditMovieInput {
+  actorIds: [String!]!
+  contentId: String!
+  description: String
+  genresIds: [String!]!
+  id: String!
+  releaseYear: Float!
+  title: String!
+}
+
+input EnableTotpInput {
+  pin: String!
+  secret: String!
+}
+
+type EpisodeModel {
+  airDate: DateTime
+  createdAt: DateTime!
+  description: String
+  duration: Float
+  episodeNumber: Float!
+  hlsMasterUrl: String
+  id: String!
+  originalVideoKey: String
+  processingError: String
+  processingJobId: String
+  processingStatus: ProcessingStatus!
+  seasonId: String!
+  thumbnailUrl: String
+  title: String!
+  updatedAt: DateTime!
+}
+
+type GenreModel {
+  content: ContentModel!
+  contentId: String!
+  createdAt: DateTime!
+  id: String!
+  name: String!
+  slug: String!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type LocationModel {
+  city: String!
+  country: String!
+  latitude: Float!
+  longitude: Float!
+}
+
+input LoginInput {
+  login: String!
+  password: String!
+  pin: String
+}
+
+type MovieModel {
+  content: ContentModel!
+  contentId: String!
+  createdAt: DateTime!
+  duration: Float!
+  hlsMasterUrl: String!
+  id: String!
+  originalVideoKey: String!
+  processingError: String!
+  processingJobId: String!
+  processingStatus: ProcessingStatus!
+  updatedAt: DateTime!
+}
+
+type Mutation {
+  approveTvAuth(code: String!): Boolean!
+  cancelProcessingJob(jobId: String!): Boolean!
+  changePassword(data: ChangePasswordInput!): Boolean!
+  clearSessionCookie: Boolean!
+  createContent(data: CreateContentInput!, poster: Upload!): String!
+  createEpisode(data: CreateEpisodeInput!): Boolean!
+  createMovie(contentId: String!): Boolean!
+  createSeriesSeason(data: CreateSeriesSeasonInput!): Boolean!
+  createUser(data: CreateUserInput!): Boolean!
+  disableTotp: Boolean!
+  editMovie(backdrop: Upload, data: EditMovieInput!, poster: Upload): Boolean!
+  enableTotp(data: EnableTotpInput!): Boolean!
+  generateTvCode: TvAuthCodeType!
+  loginUser(data: LoginInput!): AuthModel!
+  logoutTv: Boolean!
+  logoutUser: Boolean!
+  newPassword(data: NewPasswordInput!): Boolean!
+  processVideo(data: ProcessVideoInput!): ProcessVideoResponse!
+  removeSession(id: String!): Boolean!
+  resetPassword(data: ResetPasswordInput!): Boolean!
+  setContentFavorite(data: SetFavoriteInput!): Boolean!
+  syncProcessingJob(jobId: String!): Boolean!
+  verifyAccount(data: VerificationInput!): AuthModel!
+}
+
+input NewPasswordInput {
+  password: String!
+  passwordRepeat: String!
+  token: String!
+}
+
+input ProcessVideoInput {
+  movieId: String!
+  qualities: [String!]!
+  s3Key: String
+  videoUrl: String
+}
+
+type ProcessVideoResponse {
+  jobId: String!
+  message: String!
+}
+
+type ProcessingJobModel {
+  completedAt: DateTime
+  completedQualities: [String!]!
+  createdAt: DateTime!
+  episode: EpisodeModel
+  episodeId: String
+  error: String
+  id: String!
+  jobId: String!
+  movie: MovieModel
+  movieId: String
+  progress: JSON
+  requestedQualities: [String!]!
+  startedAt: DateTime
+  status: ProcessingStatus!
+  updatedAt: DateTime!
+}
+
+enum ProcessingStatus {
+  CANCELLED
+  COMPLETED
+  FAILED
+  PENDING
+  PROCESSING
+}
+
+type Query {
+  findAllActors: [ActorModel!]!
+  findAllContent: [ContentModel!]!
+  findAllGenres: [GenreModel!]!
+  findAllProcessingJobs: [ProcessingJobModel!]!
+  findContentById(contentId: String!): ContentModel!
+  findCurrentSession: SessionModel!
+  findProfile: UserModel!
+  findSessionsByUser: [SessionModel!]!
+  generateTotpSecret: TotpModel!
+  isContentFavorite(contentId: String!): Boolean!
+  myTvSessions: [TvSessionType!]!
+}
+
+input ResetPasswordInput {
+  email: String!
+}
+
+type SeriesModel {
+  content: ContentModel!
+  contentId: String!
+  createdAt: DateTime!
+  id: String!
+  status: SeriesStatus!
+  totalEpisodes: Float!
+  totalSeasons: Float!
+  updatedAt: DateTime!
+}
+
+enum SeriesStatus {
+  CANCELLED
+  COMPLETED
+  ONGOING
+}
+
+type SessionMetadataModel {
+  device: DeviceModel!
+  ip: String!
+  location: LocationModel!
+}
+
+type SessionModel {
+  createdAt: String!
+  id: ID!
+  metadata: SessionMetadataModel!
+  userId: String!
+}
+
+input SetFavoriteInput {
+  contentId: String!
+  value: Boolean!
+}
+
+type Subscription {
+  authStatus(token: String!): TvAuthStatus!
+  videoJobProgress(jobId: String!): VideoJobProgressModel!
+}
+
+type TotpModel {
+  qrcodeUrl: String!
+  secret: String!
+}
+
+type TvAuthCodeType {
+  code: String!
+  token: String!
+}
+
+type TvAuthStatus {
+  sessionToken: String
+  status: String
+  success: Boolean!
+  user: UserModel
+}
+
+type TvSessionType {
+  createdAt: Float!
+  deviceInfo: String
+  token: String!
+  userId: String!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type UserModel {
+  createdAt: DateTime!
+  dateOfBirth: DateTime
+  email: String!
+  firstName: String!
+  id: ID!
+  isEmailVerified: Boolean!
+  isTotpEnabled: Boolean!
+  lastName: String!
+  password: String!
+  role: UserRole!
+  totpSecret: String
+  updatedAt: DateTime!
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+input VerificationInput {
+  token: String!
+}
+
+type VideoJobProgressModel {
+  jobId: String!
+  percent: Float!
+  quality: String
+  speed: String
+  status: String!
+}

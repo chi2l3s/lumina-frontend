@@ -1,0 +1,10 @@
+query FindProfile {
+    findProfile {
+        id
+        firstName
+        lastName
+        email
+        dateOfBirth
+        isTotpEnabled
+    }
+}

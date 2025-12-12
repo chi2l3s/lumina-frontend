@@ -1,0 +1,27 @@
+query FindContentById($contentId: String!) {
+  findContentById(contentId: $contentId) {
+    id
+    title
+    releaseYear
+    genres {
+      id
+      name
+    }
+    actors {
+      id
+      name
+    }
+    type
+    backdropUrl
+    posterUrl
+    trailerUrl
+    description
+    rating
+    movie {
+      id
+    }
+    series {
+      id
+    }
+  }
+}

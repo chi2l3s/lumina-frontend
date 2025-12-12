@@ -1,0 +1,3 @@
+mutation EditMovie($data: EditMovieInput!, $poster: Upload, $backdrop: Upload) {
+    editMovie(data: $data, poster: $poster, backdrop: $backdrop)
+}

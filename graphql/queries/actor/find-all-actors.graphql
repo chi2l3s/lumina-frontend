@@ -1,0 +1,6 @@
+query FindAllActors {
+    findAllActors {
+        id
+        name
+    }
+}

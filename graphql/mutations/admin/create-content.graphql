@@ -1,0 +1,3 @@
+mutation CreateContent($data: CreateContentInput!, $poster: Upload!) {
+    createContent(data: $data, poster: $poster)
+}

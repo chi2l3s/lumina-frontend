@@ -1,0 +1,8 @@
+subscription StreamVideoProcess($jobId: String!) {
+  videoJobProgress(jobId: $jobId) {
+    jobId
+    percent
+    quality
+    speed
+  }
+}

@@ -1,0 +1,3 @@
+mutation AuthorizeTV($code: String!) {
+    approveTvAuth(code: $code)
+}

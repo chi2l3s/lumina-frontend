@@ -1,0 +1,3 @@
+query IsContentFavorite($contentId: String!) {
+    isContentFavorite(contentId: $contentId)
+}

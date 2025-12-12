@@ -1,0 +1,7 @@
+query FindAllGenres {
+    findAllGenres {
+        id
+        name
+        slug
+    }
+}

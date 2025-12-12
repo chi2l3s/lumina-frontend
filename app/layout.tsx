@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ToastProvider } from "@/components/ui/toast";
+import { ApolloClientProvider } from "@/components/providers/apollo-client-provider";
+import { EmojiProviders } from "@/components/providers/emoji-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import NextTopLoader from 'nextjs-toploader';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,11 +28,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ru" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ApolloClientProvider>
+          <ThemeProvider
+            attribute={"class"}
+            defaultTheme="dark"
+            disableTransitionOnChange
+          >
+            <EmojiProviders>
+              <ToastProvider>
+                <NextTopLoader />
+                {children}
+                </ToastProvider>
+            </EmojiProviders>
+          </ThemeProvider>
+        </ApolloClientProvider>
       </body>
     </html>
   );

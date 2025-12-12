@@ -1,0 +1,9 @@
+query FindAllProcessingJobs {
+    findAllProcessingJobs {
+        id
+        jobId
+        status
+        progress
+        error
+    }
+}
