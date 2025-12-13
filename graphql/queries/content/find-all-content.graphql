@@ -5,6 +5,8 @@ query FindAllContent {
     description
     releaseYear
     posterUrl
+    backdropUrl
     trailerUrl
+    updatedAt
   }
 }

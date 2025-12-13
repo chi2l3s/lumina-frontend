@@ -1,0 +1,7 @@
+query SearchContent($query: String!) {
+    searchContent(query: $query) {
+        id
+        title
+        posterUrl
+    }
+}

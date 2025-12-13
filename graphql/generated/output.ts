@@ -191,7 +191,7 @@ export type Mutation = {
   createEpisode: Scalars['Boolean']['output'];
   createMovie: Scalars['Boolean']['output'];
   createSeriesSeason: Scalars['Boolean']['output'];
-  createUser: Scalars['Boolean']['output'];
+  createUser: Scalars['String']['output'];
   disableTotp: Scalars['Boolean']['output'];
   editMovie: Scalars['Boolean']['output'];
   enableTotp: Scalars['Boolean']['output'];
@@ -360,6 +360,7 @@ export type Query = {
   generateTotpSecret: TotpModel;
   isContentFavorite: Scalars['Boolean']['output'];
   myTvSessions: Array<TvSessionType>;
+  searchContent: Array<ContentModel>;
 };
 
 
@@ -370,6 +371,11 @@ export type QueryFindContentByIdArgs = {
 
 export type QueryIsContentFavoriteArgs = {
   contentId: Scalars['String']['input'];
+};
+
+
+export type QuerySearchContentArgs = {
+  query: Scalars['String']['input'];
 };
 
 export type ResetPasswordInput = {
@@ -528,7 +534,7 @@ export type CreateAccountMutationVariables = Exact<{
 }>;
 
 
-export type CreateAccountMutation = { __typename?: 'Mutation', createUser: boolean };
+export type CreateAccountMutation = { __typename?: 'Mutation', createUser: string };
 
 export type LogOutUserMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -621,7 +627,7 @@ export type StreamVideoProcessSubscription = { __typename?: 'Subscription', vide
 export type FindAllContentQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FindAllContentQuery = { __typename?: 'Query', findAllContent: Array<{ __typename?: 'ContentModel', id: string, title: string, description?: string | null, releaseYear?: number | null, posterUrl?: string | null, trailerUrl?: string | null }> };
+export type FindAllContentQuery = { __typename?: 'Query', findAllContent: Array<{ __typename?: 'ContentModel', id: string, title: string, description?: string | null, releaseYear?: number | null, posterUrl?: string | null, backdropUrl?: string | null, trailerUrl?: string | null, updatedAt: any }> };
 
 export type FindContentByIdQueryVariables = Exact<{
   contentId: Scalars['String']['input'];
@@ -636,6 +642,13 @@ export type IsContentFavoriteQueryVariables = Exact<{
 
 
 export type IsContentFavoriteQuery = { __typename?: 'Query', isContentFavorite: boolean };
+
+export type SearchContentQueryVariables = Exact<{
+  query: Scalars['String']['input'];
+}>;
+
+
+export type SearchContentQuery = { __typename?: 'Query', searchContent: Array<{ __typename?: 'ContentModel', id: string, title: string, posterUrl?: string | null }> };
 
 export type FindAllGenresQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1290,7 +1303,9 @@ export const FindAllContentDocument = gql`
     description
     releaseYear
     posterUrl
+    backdropUrl
     trailerUrl
+    updatedAt
   }
 }
     `;
@@ -1426,6 +1441,48 @@ export type IsContentFavoriteQueryHookResult = ReturnType<typeof useIsContentFav
 export type IsContentFavoriteLazyQueryHookResult = ReturnType<typeof useIsContentFavoriteLazyQuery>;
 export type IsContentFavoriteSuspenseQueryHookResult = ReturnType<typeof useIsContentFavoriteSuspenseQuery>;
 export type IsContentFavoriteQueryResult = Apollo.QueryResult<IsContentFavoriteQuery, IsContentFavoriteQueryVariables>;
+export const SearchContentDocument = gql`
+    query SearchContent($query: String!) {
+  searchContent(query: $query) {
+    id
+    title
+    posterUrl
+  }
+}
+    `;
+
+/**
+ * __useSearchContentQuery__
+ *
+ * To run a query within a React component, call `useSearchContentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchContentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchContentQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchContentQuery(baseOptions: Apollo.QueryHookOptions<SearchContentQuery, SearchContentQueryVariables> & ({ variables: SearchContentQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchContentQuery, SearchContentQueryVariables>(SearchContentDocument, options);
+      }
+export function useSearchContentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchContentQuery, SearchContentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchContentQuery, SearchContentQueryVariables>(SearchContentDocument, options);
+        }
+export function useSearchContentSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SearchContentQuery, SearchContentQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SearchContentQuery, SearchContentQueryVariables>(SearchContentDocument, options);
+        }
+export type SearchContentQueryHookResult = ReturnType<typeof useSearchContentQuery>;
+export type SearchContentLazyQueryHookResult = ReturnType<typeof useSearchContentLazyQuery>;
+export type SearchContentSuspenseQueryHookResult = ReturnType<typeof useSearchContentSuspenseQuery>;
+export type SearchContentQueryResult = Apollo.QueryResult<SearchContentQuery, SearchContentQueryVariables>;
 export const FindAllGenresDocument = gql`
     query FindAllGenres {
   findAllGenres {

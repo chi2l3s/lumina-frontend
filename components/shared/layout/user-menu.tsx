@@ -67,9 +67,11 @@ export const UserMenu = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-fit" align="end">
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <User />
-            Мой аккаунт
+          <DropdownMenuItem asChild>
+            <Link href="/account" className="flex items-center gap-2">
+              <User />
+              Мой аккаунт
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Star />

@@ -170,7 +170,7 @@ type Mutation {
   createEpisode(data: CreateEpisodeInput!): Boolean!
   createMovie(contentId: String!): Boolean!
   createSeriesSeason(data: CreateSeriesSeasonInput!): Boolean!
-  createUser(data: CreateUserInput!): Boolean!
+  createUser(data: CreateUserInput!): String!
   disableTotp: Boolean!
   editMovie(backdrop: Upload, data: EditMovieInput!, poster: Upload): Boolean!
   enableTotp(data: EnableTotpInput!): Boolean!
@@ -243,6 +243,7 @@ type Query {
   generateTotpSecret: TotpModel!
   isContentFavorite(contentId: String!): Boolean!
   myTvSessions: [TvSessionType!]!
+  searchContent(query: String!): [ContentModel!]!
 }
 
 input ResetPasswordInput {

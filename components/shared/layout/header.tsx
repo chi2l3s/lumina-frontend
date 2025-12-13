@@ -7,6 +7,7 @@ import { GlassButton } from "../auth/glass-button";
 import { UserMenu } from "./user-menu";
 import { SearchInput } from "../main/search-input";
 import { Container } from "./container";
+import Link from "next/link";
 
 export const Header = () => {
   const [hidden, setHidden] = useState(false);
@@ -39,7 +40,7 @@ export const Header = () => {
         <div className="flex items-center justify-between max-w-7xl mx-auto py-2 md:py-4 lg:py-6">
           <div className="flex items-center justify-center gap-x-2 md:gap-x-4">
             <Image
-              src={"/logo.jpg"}
+              src={"/logo.png"}
               alt="Lumina"
               width={40}
               height={42}
@@ -55,8 +56,12 @@ export const Header = () => {
             </h2>
           </div>
           <div className="hidden md:flex items-center justify-center gap-x-2 lg:gap-x-[30px]">
-            <GlassButton>Главное</GlassButton>
-            <GlassButton>Моё</GlassButton>
+            <Link href={'/'}>
+              <GlassButton>Главное</GlassButton>
+            </Link>
+            <Link href={'/favorite'}>
+              <GlassButton>Моё</GlassButton>
+            </Link>
             <SearchInput />
           </div>
           <UserMenu />
