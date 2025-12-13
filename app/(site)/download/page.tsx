@@ -13,7 +13,7 @@ const platforms = [
     version: "Android 9+",
     size: "65 MB",
     primaryCta: "Скачать APK",
-    primaryHref: "https://github.com/chi2l3s/lumina-native/releases/download/1.0.0/application-60e9d48a-ff0e-47c9-8dc5-e4bb7d6ae033.apk",
+    primaryHref: "https://github.com/chi2l3s/lumina-native/releases/download/1.0.1/application-85ea194d-66a7-4a0c-9963-b752c31c5620.apk",
     secondaryCta: "Google Play",
     secondaryHref: "https://play.google.com",
   },

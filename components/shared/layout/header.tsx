@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
 import { akonyFont } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
@@ -17,17 +16,14 @@ export const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       const current = window.scrollY;
-
       if (current > lastScrollY.current && current > 80) {
         setHidden(true);
       } else {
         setHidden(false);
       }
-
       setWithBackground(current > 10);
       lastScrollY.current = current;
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -40,25 +36,29 @@ export const Header = () => {
       )}
     >
       <Container>
-        <div className="flex items-center justify-between max-w-7xl mx-auto py-4 lg:py-6">
-          <div className="flex items-center justify-center gap-x-4">
-            <Image src={"/logo.png"} alt="Lumina" width={71} height={75} />
+        <div className="flex items-center justify-between max-w-7xl mx-auto py-2 md:py-4 lg:py-6">
+          <div className="flex items-center justify-center gap-x-2 md:gap-x-4">
+            <Image
+              src={"/logo.jpg"}
+              alt="Lumina"
+              width={40}
+              height={42}
+              className="md:w-[71px] md:h-[75px]"
+            />
             <h2
               className={cn(
                 akonyFont.className,
-                "text-3xl lg:text-5xl"
+                "text-xl md:text-3xl lg:text-5xl"
               )}
             >
               LUMINA
             </h2>
           </div>
-
-          <div className="flex items-center justify-center gap-x-4 lg:gap-x-[30px]">
+          <div className="hidden md:flex items-center justify-center gap-x-2 lg:gap-x-[30px]">
             <GlassButton>Главное</GlassButton>
             <GlassButton>Моё</GlassButton>
             <SearchInput />
           </div>
-
           <UserMenu />
         </div>
       </Container>

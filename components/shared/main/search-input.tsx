@@ -54,7 +54,11 @@ export const SearchInput = () => {
           )}
         </AnimatePresence>
 
-        <GlassButton size="icon" onClick={() => setFocused((prev) => !prev)}>
+        <GlassButton
+          size="icon"
+          className="h-10 w-10 p-0"
+          onClick={() => setFocused((prev) => !prev)}
+        >
           {focused ? <X /> : <Search />}
         </GlassButton>
       </div>
